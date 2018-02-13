@@ -17,7 +17,7 @@ class PersonAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email',
-         'phone_number', 'date_of_birth')}),
+         'date_of_birth')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
          'is_teacher', 'is_adminStaff', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -25,8 +25,7 @@ class PersonAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'first_name',
-                       'last_name', 'email', 'date_of_birth')
+            'fields': ('username', 'password1', 'password2',)
         }
         ),
     )
