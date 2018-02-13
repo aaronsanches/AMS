@@ -1,0 +1,6 @@
+###### Requirements ######
+# These dependencies must be installed before attempting to run this project
+# Install with: pip install -r requirements.txt
+Django >= 2.0.2
+pytz >= 2018.3
+
