@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,20 +15,46 @@
   <link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
   <link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
 
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
+  
 </head>
+
 <body>
-  <div class="container">
+  <div class="banner">
+    <div class="container">
+      <div class="header clear pad-top-20 pad-bottom-20">
+        <a class="left-l" href="{% url 'accounts:index' %}">
+          <h1>AMS</h1>
+        </a>
+        {% if user.is_authenticated %}
+        <ul class="menu right-l">
+          <li>
+            <a href="#">Logout</a>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="menu right-l">
+          <li>
+            <a href="#">Login</a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container pad-top-40 pad-bottom-40 ">
     {% block content %}{% endblock %}
   </div>
 
-<!-- Google Analytics -->
-<script>
-  window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-  ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+  <!-- Google Analytics -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
 </body>
+
 </html>
