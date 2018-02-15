@@ -6,7 +6,7 @@
 
 {% if form.errors %}
 <div class="row">
-  <div class="col-5 push-3">
+  <div class="col-6-m push-3-m">
     <p class="danger">Your username and password didn't match.<br/>Please try again.</p>
   </div>
 </div>
@@ -25,22 +25,22 @@
 {% csrf_token %}
 
 <div class="row">
-  <div class="col-4 push-4">
+  <div class="col-6-m push-3-m pad-10">
     <label for="id_username">Username:</label>
-    <input class="col-full" id="id_username" maxlength="30" name="username" type="text" autofocus required>
+    <input class="field" id="id_username" maxlength="30" name="username" type="text" autofocus required>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-4 push-4">
+  <div class="col-6-m push-3-m pad-10">
     <label for="id_password">Password:</label>
-    <input class="col-full" id="id_password" name="password" type="password" required>
+    <input class="field" id="id_password" name="password" type="password" required>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-4 push-4">
-    <input class="" type="submit" value="Login">
+  <div class="col-6-m push-3-m pad-10">
+    <input class="button right field" type="submit" value="Login">
     <input type="hidden" name="next" value="{{ next }}" />
   </div>
 </div>
@@ -48,12 +48,12 @@
 </form>
 
 <div class="row">
-  <div class="col-3 push-3">
+  <div class="col-3-m push-3-m">
     <a href="{% url 'accounts:password_reset' %}">
       <button type="submit">Reset Password</button>
     </a>
   </div>
-  <div class="col-3">
+  <div class="col-3-m">
     <a href="{% url 'accounts:register' %}">
       <button type="submit">Register</button>
     </a>

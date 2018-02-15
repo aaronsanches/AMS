@@ -1,6 +1,15 @@
-{% extends "base.html" %} {% block title %}Register{% endblock %} {% block content %}
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
 <form method="post" action=".">
-  {% csrf_token %} {{ form.non_field_errors }}
+  {% csrf_token %} 
+  <div class="row">
+    <div class="col-8-m push-2-m">
+      {{ form.non_field_errors }}
+    </div>
+  </div>
   <div class="row">
     <div class="col-6-m push-3-m pad-10">
       <label for="id_username">Username</label>
@@ -48,7 +57,7 @@
       <input class="field" id="id_password2" name="password2" type="password" required> {{ form.password2.errors }}
     </div>
   </div>
-  <div class="row">
+  <div class="row pad-10">
     <div class="col-3-m push-6-m">
       <input type="submit" class="button right field" value="Register" />
     </div>

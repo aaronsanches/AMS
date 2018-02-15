@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .forms import PersonCreationForm
 # Create your views here.
@@ -7,6 +7,7 @@ from .forms import PersonCreationForm
 
 def index(request):
     return HttpResponse("Hello, World. You're at the accounts index.")
+
 
 def register(request):
     if request.method == 'POST':
@@ -16,4 +17,4 @@ def register(request):
             return redirect('accounts:index')
     else:
         form = PersonCreationForm()
-    return render(request, 'registration/register.html', {'form':form})
+    return render(request, 'registration/register.html', {'form': form})

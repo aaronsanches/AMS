@@ -15,8 +15,8 @@ class PersonCreationForm(UserCreationForm):
 
     class Meta:
         model = Person
-        fields = ("username", "first_name", "last_name", "date_of_birth",
-                  "email",)
+        fields = ("username", "first_name", "last_name", "email",
+                  "date_of_birth", )
 
 
 class PersonChangeForm(UserChangeForm):
@@ -44,4 +44,4 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ("username", "first_name", "last_name", "email",
-                  "date_of_birth",)
+                  "date_of_birth", )
