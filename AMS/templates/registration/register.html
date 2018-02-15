@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Register{% endblock %} {% block content %}
+<form method="post" action=".">
+  {% csrf_token %} {{ form.non_field_errors }}
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="id_username">Username</label>
+      <input class="field" id="id_username" name="username" type="text" placeholder="username" value="{{ form.username.value|default_if_none:'' }}"
+        required> {{ form.username.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="id_first_name">First Name</label>
+      <input class="field" id="id_first_name" name="first_name" type="text" pattern="[a-zA-Z][a-zA-Z .'-]{1,24}" placeholder="John"
+        value="{{ form.first_name.value|default_if_none:'' }}" required> {{ form.first_name.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="id_last_name">Last Name</label>
+      <input class="field" id="id_last_name" name="last_name" pattern="[a-zA-Z][a-zA-Z .'-]{1,24}" type="text" value="{{ form.last_name.value|default_if_none:'' }}"
+        placeholder="Doe"> {{ form.last_name.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="id_date_of_birth">Date Of Birth</label>
+      <input class="field" id="id_date_of_birth" name="date_of_birth" type="date" value="{{ form.date_of_birth.value|default_if_none:'' }}"
+        required> {{ form.date_of_birth.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="email">Email-ID</label>
+      <input class="field" id="email" name="email" type="email" placeholder="abc@xyz.com" value="{{ form.email.value|default_if_none:'' }}"
+        required> {{ form.email.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="id_password1">Password</label>
+      <input class="field" id="id_password1" name="password1" type="password" required> {{ form.password1.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6-m push-3-m pad-10">
+      <label for="id_password2">Re-enter Password</label>
+      <input class="field" id="id_password2" name="password2" type="password" required> {{ form.password2.errors }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3-m push-6-m">
+      <input type="submit" class="button right field" value="Register" />
+    </div>
+  </div>
+</form>
+{% endblock %}
