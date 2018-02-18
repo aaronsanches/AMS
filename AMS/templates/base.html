@@ -23,23 +23,11 @@
 <body>
   <div class="banner">
     <div class="container">
-      <div class="header clear pad-top-20 pad-bottom-20">
-        <a class="left-l" href="{% url 'accounts:index' %}">
-          <h1>AMS</h1>
+      <div class="menu header clear pad-top-10 pad-bottom-10">
+        <a class="left strong" href="{% url 'accounts:index' %}">
+          AMS
         </a>
-        {% if user.is_authenticated %}
-        <ul class="menu right-l">
-          <li>
-            <a href="#">Logout</a>
-          </li>
-        </ul>
-        {% else %}
-        <ul class="menu right-l">
-          <li>
-            <a href="#">Login</a>
-          </li>
-        </ul>
-        {% endif %}
+        {% block nav %} {% endblock nav %}
       </div>
     </div>
   </div>
