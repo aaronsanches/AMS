@@ -18,3 +18,6 @@ def register(request):
     else:
         form = PersonCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+def profile(request):
+  return HttpResponse("Profile view")
