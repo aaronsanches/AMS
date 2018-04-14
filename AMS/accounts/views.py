@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from .forms import PersonCreationForm
+
+
 # Create your views here.
 
 
@@ -19,5 +21,6 @@ def register(request):
         form = PersonCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
 def profile(request):
-  return HttpResponse("Profile view")
+    return HttpResponse("Profile page")

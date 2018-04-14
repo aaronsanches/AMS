@@ -17,9 +17,10 @@ class PersonAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email',
-         'date_of_birth')}),
+                                         'date_of_birth')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-         'is_teacher', 'is_adminStaff', 'groups', 'user_permissions')}),
+                                       'is_teacher', 'is_adminStaff', 'groups',
+                                       'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
@@ -27,7 +28,7 @@ class PersonAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('username', 'password1', 'password2',)
         }
-        ),
+         ),
     )
     form = PersonChangeForm
     add_form = PersonCreationForm
@@ -39,7 +40,7 @@ class StudentAdmin(PersonAdmin):
         (_('Personal info'),
          {'fields': ('first_name', 'last_name', 'email', 'date_of_birth')}),
         (_('Academic details'),
-         {'fields': ('enrollment_no', 'current_semester', 'graduation_year')}),
+         {'fields': ('enrollment_no', 'course', 'semester')}),
         (_('Permissions'), {
             'classes': ('collapse',),
             'fields': ('is_active', 'is_staff', 'is_superuser',
@@ -54,7 +55,11 @@ class StudentAdmin(PersonAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (
-                'username', 'enrollment_no', 'password1', 'password2',)}),
+                'username', 'enrollment_no',
+                'password1',
+                'password2',
+                'course',
+                'semester', )}),
     )
 
 
@@ -63,7 +68,6 @@ class ProfessorAdmin(PersonAdmin):
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'),
          {'fields': ('first_name', 'last_name', 'email', 'date_of_birth')}),
-        (_('Courses'), {'fields': ('courses',)}),
         (_('Permissions'), {
             'classes': ('collapse',),
             'fields': ('is_active', 'is_staff', 'is_superuser',
@@ -72,6 +76,16 @@ class ProfessorAdmin(PersonAdmin):
         (_('Important dates'), {
             'classes': ('collapse',),
             'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2',)
+        }
+         ),
+        (None, {
+            'fields': ('is_teacher', 'subjects')
+        }),
     )
 
 

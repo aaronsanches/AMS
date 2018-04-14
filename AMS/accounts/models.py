@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+
 
 # Create your models here.
 
@@ -17,8 +18,10 @@ class Person(AbstractUser):
 
 class Student(Person):
     enrollment_no = models.CharField(max_length=50, default=None, unique=True)
-    current_semester = models.IntegerField(default=1, null=True)
-    graduation_year = models.IntegerField(null=True)
+    course = models.ForeignKey('attendance.Course', on_delete=models.CASCADE,
+                               default=None)
+    SEMESTER_NUM_CHOICES = [(str(i), str(i)) for i in range(1, 9)]
+    semester = models.CharField(max_length=1, choices=SEMESTER_NUM_CHOICES)
 
     class Meta:
         verbose_name = 'Student'
@@ -29,7 +32,7 @@ class Student(Person):
 
 
 class Professor(Person):
-    courses = models.ManyToManyField('attendance.Course')
+    subjects = models.ManyToManyField('attendance.Subject')
 
     class Meta:
         verbose_name = 'Professor'
@@ -37,3 +40,7 @@ class Professor(Person):
 
     def __str__(self):
         return self.username
+
+# to automate createsuperuser
+
+# echo "from django.contrib.auth.models import AbstractUser; from accounts.models import Person; Person.objects.create_superuser('a', 'a@b.com', 'qweqwe123')" | python manage.py shell
