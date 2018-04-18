@@ -40,7 +40,7 @@ class StudentAdmin(PersonAdmin):
         (_('Personal info'),
          {'fields': ('first_name', 'last_name', 'email', 'date_of_birth')}),
         (_('Academic details'),
-         {'fields': ('enrollment_no', 'course', 'semester')}),
+         {'fields': ('enrollment_no', 'course', 'subjects')}),
         (_('Permissions'), {
             'classes': ('collapse',),
             'fields': ('is_active', 'is_staff', 'is_superuser',
@@ -58,8 +58,7 @@ class StudentAdmin(PersonAdmin):
                 'username', 'enrollment_no',
                 'password1',
                 'password2',
-                'course',
-                'semester', )}),
+                'course',)}),
     )
 
 
@@ -76,6 +75,7 @@ class ProfessorAdmin(PersonAdmin):
         (_('Important dates'), {
             'classes': ('collapse',),
             'fields': ('last_login', 'date_joined')}),
+        (_('Subjects'), {'fields': ('courses', 'subjects')})
     )
     add_fieldsets = (
         (None, {
@@ -84,7 +84,7 @@ class ProfessorAdmin(PersonAdmin):
         }
          ),
         (None, {
-            'fields': ('is_teacher', 'subjects')
+            'fields': ('is_teacher',)
         }),
     )
 

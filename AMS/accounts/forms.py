@@ -1,7 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from .models import Person
+from .models import Student
 
 
 class PersonCreationForm(UserCreationForm):
@@ -14,9 +14,9 @@ class PersonCreationForm(UserCreationForm):
         super(PersonCreationForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = Person
+        model = Student
         fields = ("username", "first_name", "last_name", "email",
-                  "date_of_birth", )
+                  "date_of_birth",)
 
 
 class PersonChangeForm(UserChangeForm):
@@ -29,7 +29,7 @@ class PersonChangeForm(UserChangeForm):
         super(PersonChangeForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = Person
+        model = Student
         fields = '__all__'
 
 
@@ -42,6 +42,6 @@ class EditProfileForm(forms.ModelForm):
         super(EditProfileForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = Person
+        model = Student
         fields = ("username", "first_name", "last_name", "email",
-                  "date_of_birth", )
+                  "date_of_birth",)

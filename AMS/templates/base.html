@@ -3,45 +3,56 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
 
-  <meta name="description" content="{% block description %}{% endblock %}">
-  <meta name="theme-color" content="#f7c824">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
-  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'img/apple-touch-icon.png' %}">
-  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
-  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="theme-color" content="#f7c824">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
 
-  <link rel="stylesheet" href="{% static 'css/site.css' %}">
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
 </head>
 
 <body>
-  <div class="banner">
+<div class="banner">
     <div class="container">
-      <div class="menu header clear pad-top-10 pad-bottom-10">
-        <a class="left strong" href="{% url 'accounts:index' %}">
-          AMS
-        </a>
-        {% block nav %} {% endblock nav %}
-      </div>
+        <div class="menu header clear pad-top-10 pad-bottom-10">
+            <a class="left strong" href="{% url 'accounts:index' %}">
+                AMS
+            </a>
+            {% block nav %}
+            {% if user.is_authenticated %}
+            <a class="right" href="{% url 'accounts:logout' %}">Logout</a>
+            {% else %}
+            <a class="right" href="{% url 'accounts:login' %}">Login</a>
+            {% endif %}
+            {% endblock nav %}
+        </div>
     </div>
-  </div>
+</div>
 
-  <div class="container pad-top-40 pad-bottom-40 ">
+<div class="container pad-top-40 pad-bottom-40 ">
     {% block content %}{% endblock %}
-  </div>
+</div>
 
-  <!-- Google Analytics -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+<!-- Google Analytics -->
+<script>
+    window.ga = function () {
+        ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
 </body>
 

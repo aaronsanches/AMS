@@ -10,16 +10,15 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('subject_name', 'course', 'semester', 'professor_list')
+    list_display = ('subject_name', 'course',)
+    list_filter = ('course',)
 
-    list_filter = ('course', 'semester')
-
-    def course(self, obj):
-        return obj.course.course_name
+    # def course(self, obj):
+    #     return obj.course.course_name
 
 
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ('course', 'subject', 'professor', 'when')
+    list_display = ('course', 'subject', 'professor', 'when', 'duration')
     list_filter = ('course', 'subject', 'professor')
 
 

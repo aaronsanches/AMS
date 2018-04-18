@@ -1,6 +1,11 @@
+from datetime import timedelta
+
 from django.db import models
+from django.urls import reverse
+from django.utils.datetime_safe import datetime
+
+
 # Create your models here.
-from django.db.models.functions import datetime
 
 
 class Course(models.Model):
@@ -21,15 +26,10 @@ class Course(models.Model):
 
 class Subject(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    SEMESTER_NUM_CHOICES = [(str(i), str(i)) for i in range(1, 9)]
-    semester = models.CharField(max_length=1, choices=SEMESTER_NUM_CHOICES,
-                                default='1')
+    # SEMESTER_NUM_CHOICES = [(str(i), str(i)) for i in range(1, 9)]
+    # semester = models.CharField(max_length=1, choices=SEMESTER_NUM_CHOICES,default = '1')
     subject_name = models.CharField(max_length=100, default=None)
     subject_code = models.CharField(max_length=20, default=None)
-    professors = models.ManyToManyField('accounts.Professor')
-
-    def professor_list(self):
-        return ", ".join([p.username for p in self.professors.all()])
 
     def __str__(self):
         return self.subject_name
@@ -59,8 +59,8 @@ class Attendance(models.Model):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    when = models.DateTimeField(default=datetime.datetime.now)
-    # duration = models.DurationField(default=datetime.timedelta(hour=1))
+    when = models.DateTimeField(default=datetime.now)
+    duration = models.DurationField(default=timedelta(hours=1))
     professor = models.ForeignKey('accounts.Professor',
                                   on_delete=models.CASCADE)
     students = models.ManyToManyField('accounts.Student')
@@ -69,3 +69,6 @@ class Attendance(models.Model):
 
     def __str__(self):
         return self.status
+
+    def get_absolute_url(self):
+        return reverse('attendance:create')
