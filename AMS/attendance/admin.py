@@ -18,8 +18,8 @@ class SubjectAdmin(admin.ModelAdmin):
 
 
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ('course', 'subject', 'professor', 'when', 'duration')
-    list_filter = ('course', 'subject', 'professor')
+    list_display = ('course', 'subject', 'when', 'duration')
+    list_filter = ('course', 'subject', )
 
 
 admin.site.register(Course, CourseAdmin)

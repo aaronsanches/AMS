@@ -12,6 +12,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=200, default=None, unique=True)
     course_code = models.CharField(max_length=50, default=None, unique=True)
 
+
     def __str__(self):
         return self.course_name
 
@@ -46,11 +47,11 @@ class Subject(models.Model):
 
 
 class Attendance(models.Model):
-    STATUS = (
-        ('P', 'Present'),
-        ('D', 'Duty'),
-        ('A', 'Absent'),
-    )
+    # STATUS = (
+    #     ('P', 'Present'),
+    #     ('D', 'Duty'),
+    #     ('A', 'Absent'),
+    # )
     TYPE = (
         ('L', 'Lecture'),
         ('P', 'Practical'),
@@ -59,12 +60,12 @@ class Attendance(models.Model):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    when = models.DateTimeField(default=datetime.now)
+    when = models.DateTimeField(default=datetime.now, unique=True)
     duration = models.DurationField(default=timedelta(hours=1))
     professor = models.ForeignKey('accounts.Professor',
                                   on_delete=models.CASCADE)
     students = models.ManyToManyField('accounts.Student')
-    status = models.CharField(max_length=1, choices=STATUS, default='P')
+    # status = models.CharField(max_length=1, choices=STATUS, default='P')
     type = models.CharField(max_length=1, choices=TYPE, default='L')
 
     def __str__(self):

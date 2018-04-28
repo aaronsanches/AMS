@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h4>Attendance Detail</h4>
+<h4>Attendance List</h4>
 
 <div style="max-width: 600px; margin: 0 auto; padding: 15px;">
     <table>
@@ -13,16 +13,14 @@
         </tr>
         </thead>
         <tbody>
-	{% for a in object_list %}
+        {% for a in object_list %}
         <tr>
-            
             <td>{{ a.when }}</td>
             <td>{{ a.subject }}</td>
             <td>{{ a.get_type_display }}</td>
             <td>{{ a.get_status_display }}</td>
-            
         </tr>
-	{% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>

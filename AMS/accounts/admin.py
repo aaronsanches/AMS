@@ -19,7 +19,8 @@ class PersonAdmin(UserAdmin):
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email',
                                          'date_of_birth')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'is_teacher', 'is_adminStaff', 'groups',
+                                       'is_professor', 'is_adminStaff',
+                                       'groups',
                                        'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
@@ -44,7 +45,7 @@ class StudentAdmin(PersonAdmin):
         (_('Permissions'), {
             'classes': ('collapse',),
             'fields': ('is_active', 'is_staff', 'is_superuser',
-                       'is_teacher', 'is_adminStaff', 'groups',
+                       'is_professor', 'is_adminStaff', 'groups',
                        'user_permissions')}),
         (_('Important dates'), {
             'classes': ('collapse',),
@@ -70,7 +71,7 @@ class ProfessorAdmin(PersonAdmin):
         (_('Permissions'), {
             'classes': ('collapse',),
             'fields': ('is_active', 'is_staff', 'is_superuser',
-                       'is_teacher', 'is_adminStaff', 'groups',
+                       'is_professor', 'is_adminStaff', 'groups',
                        'user_permissions')}),
         (_('Important dates'), {
             'classes': ('collapse',),
@@ -84,11 +85,11 @@ class ProfessorAdmin(PersonAdmin):
         }
          ),
         (None, {
-            'fields': ('is_teacher',)
+            'fields': ('is_professor',)
         }),
     )
 
 
-admin.site.register(Person, PersonAdmin)
+# admin.site.register(Person, PersonAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Professor, ProfessorAdmin)

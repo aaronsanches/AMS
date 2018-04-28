@@ -4,4 +4,14 @@
 {% if user.is_authenticated %}
 <h2>Hello, {{ user.first_name }} {{ user.last_name }}</h2>
 {% endif %}
+{% if user.is_professor %}
+<div class="row">
+    <div class="col-6-m text-center" >
+        <a href="{% url 'attendance:create' %}">Add Attendance</a>
+    </div>
+    <div class="col-6-m text-center"  >
+        <a href="#">View Attendance</a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
