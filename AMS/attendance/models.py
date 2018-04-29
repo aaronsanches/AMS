@@ -34,7 +34,7 @@ class Subject(models.Model):
     subject_code = models.CharField(max_length=20, default=None)
 
     def __str__(self):
-        return self.subject_name
+        return self.subject_name + "(" + self.subject_code + ")"
 
 
 # class ProfessorSubject(models.Model):
@@ -70,7 +70,7 @@ class Attendance(models.Model):
     type = models.CharField(max_length=1, choices=TYPE, default='L')
 
     def __str__(self):
-        return self.type
+        return self.subject.subject_name + " - " + self.when.__str__()
 
     def get_absolute_url(self):
         return reverse('attendance:create')

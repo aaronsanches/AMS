@@ -4,8 +4,6 @@ from django import forms
 from .models import *
 
 
-###
-
 class AttendanceForm1(forms.ModelForm):
     class Meta:
         model = Attendance
@@ -22,4 +20,13 @@ class AttendanceForm1(forms.ModelForm):
 class AttendanceForm2(forms.ModelForm):
     class Meta:
         model = Attendance
-        exclude = ['course', 'subject', 'when', 'duration']
+        exclude = ['professor', 'course', 'subject', 'when', 'duration']
+
+    def __init__(self, *args, **kwargs):
+        self.subject = Subject.objects.get(pk=kwargs.pop('subject', None))
+        super(AttendanceForm2, self).__init__(*args, **kwargs)
+        # self.students = forms.MultipleChoiceField(label="Students Present",)
+        self.fields[
+            "students"].queryset = self.subject.students.all().order_by(
+            'username')
+        # self.fields["students"].widget = forms.widgets.CheckboxSelectMultiple()
