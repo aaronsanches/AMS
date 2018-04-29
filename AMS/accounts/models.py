@@ -7,7 +7,7 @@ from django.db import models
 
 class Person(AbstractUser):
     is_professor = models.BooleanField('Lecturer status', default=False,
-                                     help_text='Designates whether the user is a lecturer.')
+                                       help_text='Designates whether the user is a lecturer.')
     is_adminStaff = models.BooleanField('Admin Staff status', default=False,
                                         help_text='Designates whether the user belongs to administrative staff.')
     date_of_birth = models.DateField(blank=True, null=True,
@@ -43,4 +43,3 @@ class Professor(Person):
 
     def __str__(self):
         return self.username
-

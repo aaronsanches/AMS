@@ -20,7 +20,8 @@ class PersonCreationForm(UserCreationForm):
 
 
 class PersonChangeForm(UserChangeForm):
-    """A form for updating users. Includes all the fields on
+    """
+    A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
     password hash display field.
     """
@@ -34,7 +35,8 @@ class PersonChangeForm(UserChangeForm):
 
 
 class EditProfileForm(forms.ModelForm):
-    """A form for updating user details. Includes all the fields that
+    """
+    A form for updating user details. Includes all the fields that
     a user can modify.
     """
 

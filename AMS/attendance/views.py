@@ -26,8 +26,6 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
         return {}
 
     def done(self, form_list, form_dict, **kwargs):
-        # form_dict['0'].save(commit=False)
-        # form_dict['1'].save(commit=False)
         form1data = self.storage.get_step_data('0')
         form2data = self.storage.get_step_data('1')
         att = Attendance()
@@ -39,10 +37,7 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
             r'((?P<days>\d+) days, )?(?P<hours>\d+):'
             r'(?P<minutes>\d+):(?P<seconds>\d+)',
             form1data.get('0-duration')).groupdict(0)
-        att.duration
-        timedelta(**dict(((key, int(value))
-                          for key, value in d.items())))
-        print(form_dict['0'])
+        att.duration = timedelta(**dict(((key, int(value)) for key, value in d.items())))
         att.save()
         for s in form2data.getlist('1-students'):
             att.students.add(s)
@@ -54,13 +49,9 @@ class AttendanceList(LoginRequiredMixin, ListView):
     model = Attendance
 
     def get_queryset(self):
+        if self.request.user.is_professor:
+            return Attendance.objects.filter(professor__pk=self.request.user)
         return Attendance.objects.filter(students__pk=self.request.user)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['attendance_list'] = Attendance.objects.all()
-        return context
-
 
 # class AttendanceDetails(ListView):
 #     model = Attendance
@@ -74,7 +65,3 @@ class AttendanceList(LoginRequiredMixin, ListView):
 #         context = super().get_context_data(**kwargs)
 #         context['attendance_list'] = Attendance.objects.all()
 #         return context
-
-
-class AttendanceUpdate():
-    pass

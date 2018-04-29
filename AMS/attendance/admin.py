@@ -13,13 +13,10 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ('subject_name', 'course',)
     list_filter = ('course',)
 
-    # def course(self, obj):
-    #     return obj.course.course_name
-
 
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ('course', 'subject', 'when', 'duration')
-    list_filter = ('course', 'subject', )
+    list_filter = ('course', 'subject',)
 
 
 admin.site.register(Course, CourseAdmin)

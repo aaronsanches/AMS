@@ -1,6 +1,6 @@
-from accounts.models import *
 from django import forms
 
+from accounts.models import *
 from .models import *
 
 
@@ -26,7 +26,5 @@ class AttendanceForm2(forms.ModelForm):
         self.subject = Subject.objects.get(pk=kwargs.pop('subject', None))
         super(AttendanceForm2, self).__init__(*args, **kwargs)
         # self.students = forms.MultipleChoiceField(label="Students Present",)
-        self.fields[
-            "students"].queryset = self.subject.students.all().order_by(
-            'username')
-        # self.fields["students"].widget = forms.widgets.CheckboxSelectMultiple()
+        self.fields["students"].widget = forms.widgets.CheckboxSelectMultiple()
+        self.fields["students"].queryset = self.subject.students.all().order_by('username')

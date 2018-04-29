@@ -9,7 +9,9 @@
             <th>Date-Time</th>
             <th>Subject</th>
             <th>Type</th>
+            {% if not user.is_professor %}
             <th>Status</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -18,7 +20,9 @@
             <td>{{ a.when }}</td>
             <td>{{ a.subject }}</td>
             <td>{{ a.get_type_display }}</td>
+            {% if not user.is_professor %}
             <td>{{ a.get_status_display }}</td>
+            {% endif %}
         </tr>
         {% endfor %}
         </tbody>

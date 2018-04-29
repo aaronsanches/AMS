@@ -6,13 +6,11 @@ from django.utils.datetime_safe import datetime
 
 
 # Create your models here.
-from django.views.i18n import null_javascript_catalog
 
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200, default=None, unique=True)
     course_code = models.CharField(max_length=50, default=None, unique=True)
-
 
     def __str__(self):
         return self.course_name

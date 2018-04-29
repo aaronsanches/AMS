@@ -3,14 +3,13 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .forms import PersonChangeForm, PersonCreationForm
-from .models import *
-
-
-# Register your models here.
+from .models import Student, Professor
 
 
 class PersonAdmin(UserAdmin):
-    # The forms to add and change user instances
+    """
+    A form to add and change base user instances
+    """
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
@@ -36,6 +35,9 @@ class PersonAdmin(UserAdmin):
 
 
 class StudentAdmin(PersonAdmin):
+    """
+    A form to add and change Student instances
+    """
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'),
@@ -64,6 +66,9 @@ class StudentAdmin(PersonAdmin):
 
 
 class ProfessorAdmin(PersonAdmin):
+    """
+    A form to add and change Professor instances
+    """
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'),
@@ -90,6 +95,5 @@ class ProfessorAdmin(PersonAdmin):
     )
 
 
-# admin.site.register(Person, PersonAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Professor, ProfessorAdmin)
