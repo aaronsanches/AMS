@@ -6,6 +6,7 @@ from django.utils.datetime_safe import datetime
 
 
 # Create your models here.
+from django.views.i18n import null_javascript_catalog
 
 
 class Course(models.Model):
@@ -69,7 +70,7 @@ class Attendance(models.Model):
     type = models.CharField(max_length=1, choices=TYPE, default='L')
 
     def __str__(self):
-        return self.status
+        return self.type
 
     def get_absolute_url(self):
         return reverse('attendance:create')

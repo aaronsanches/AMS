@@ -1,19 +1,25 @@
+from accounts.models import *
 from django import forms
 
-from accounts.models import Student
 from .models import *
 
 
-class AttendanceForm(forms.ModelForm):
+###
+
+class AttendanceForm1(forms.ModelForm):
     class Meta:
         model = Attendance
-        exclude = ['professsor']
+        exclude = ['professor', 'students', 'type']
 
     def __init__(self, *args, **kwargs):
-        # brand = kwargs.pop("brand")
-        super(AttendanceForm, self).__init__(*args, **kwargs)
-        self.fields[
-            "students"].widget = forms.widgets.CheckboxSelectMultiple()
-        self.fields["students"].help_text = ""
-        self.fields[
-            "students"].queryset = Student.objects.all()
+        self.user = kwargs.pop('user', None)
+        self.prof = Professor.objects.get(pk=self.user.pk)
+        super(AttendanceForm1, self).__init__(*args, **kwargs)
+        self.fields["course"].queryset = self.prof.courses
+        self.fields["subject"].queryset = self.prof.subjects
+
+
+class AttendanceForm2(forms.ModelForm):
+    class Meta:
+        model = Attendance
+        exclude = ['course', 'subject', 'when', 'duration']

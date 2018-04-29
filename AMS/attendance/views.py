@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import ListView, FormView
+from django.shortcuts import render
+from django.views.generic import ListView
+from formtools.wizard.views import SessionWizardView
 
-from .models import *
 from .forms import *
 
 
@@ -10,20 +10,12 @@ class CourseList(ListView):
     model = Course
 
 
-class AttendanceCreate(LoginRequiredMixin, UserPassesTestMixin, FormView):
-    template_name = 'attendance/attendance_form.html'
-    form_class = AttendanceForm
-    success_url = '/add'
+class AttendanceWizard(SessionWizardView):
+    def get_form_kwargs(self, step):
+        return {'user': self.request.user}
 
-    def test_func(self):
-        return self.request.user.is_professor
-
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        # form.send_email()
-        form.save()
-        return super().form_valid(form)
+    def done(self, form_list, **kwargs):
+        return render(self.request, 'attendance/attendance_list.html')
 
 
 class AttendanceList(LoginRequiredMixin, ListView):
