@@ -29,4 +29,4 @@ class AttendanceForm2(forms.ModelForm):
         # self.students = forms.MultipleChoiceField(label="Students Present",)
         self.fields["students"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["students"].help_text = "Students that are present"
-        self.fields["students"].queryset = self.subject.students.all().order_by('username')
+        self.fields["students"].queryset = self.subject.students_enrolled.all().order_by('username')

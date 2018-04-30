@@ -2,7 +2,7 @@ import re
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from formtools.wizard.views import SessionWizardView
 
 from .forms import *
@@ -44,7 +44,7 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
         for s in form2data.getlist('1-students'):
             att.students.add(s)
         att.type = form2data.get('1-type')
-        return redirect('attendance:create')
+        return redirect('attendance:attendance-list')
 
 
 class AttendanceList(LoginRequiredMixin, ListView):
@@ -55,15 +55,15 @@ class AttendanceList(LoginRequiredMixin, ListView):
             return Attendance.objects.filter(professor__pk=self.request.user)
         return Attendance.objects.filter(students__pk=self.request.user)
 
-# class AttendanceDetails(ListView):
-#     model = Attendance
-#     template_name = 'attendance/attendanceDet.html'
-#
-#     def get_queryset(self):
-#         return Attendance.objects.filter(professor__pk=self.request.user,
-#                                          status='A').order_by('-when')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['attendance_list'] = Attendance.objects.all()
-#         return context
+
+class AttendanceDetails(DetailView):
+    model = Attendance
+    template_name = 'attendance/attendance_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AttendanceDetails, self).get_context_data(**kwargs)
+        subject = Subject.objects.get(pk=context['attendance'].subject.pk)
+        context['student_list'] = subject.students_enrolled.all().order_by('username')
+        context['present_list'] = context['attendance'].students.all()
+        return context
+
