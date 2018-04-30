@@ -2,10 +2,7 @@ from datetime import timedelta
 
 from django.db import models
 from django.urls import reverse
-from django.utils.datetime_safe import datetime
-
-
-# Create your models here.
+from django.utils import timezone
 
 
 class Course(models.Model):
@@ -16,18 +13,8 @@ class Course(models.Model):
         return self.course_name
 
 
-# class Semester(models.Model):
-#     SEMESTER_NUM_CHOICES = [(str(i), str(i)) for i in range(1, 9)]
-#     semester_num = models.CharField(max_length=1, choices=SEMESTER_NUM_CHOICES)
-#
-#     def __str__(self):
-#         return self.semester_num
-
-
 class Subject(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    # SEMESTER_NUM_CHOICES = [(str(i), str(i)) for i in range(1, 9)]
-    # semester = models.CharField(max_length=1, choices=SEMESTER_NUM_CHOICES,default = '1')
     subject_name = models.CharField(max_length=100, default=None)
     subject_code = models.CharField(max_length=20, default=None)
 
@@ -35,22 +22,7 @@ class Subject(models.Model):
         return self.subject_name + "(" + self.subject_code + ")"
 
 
-# class ProfessorSubject(models.Model):
-#     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-#     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-#     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-#     professor = models.ManyToManyField('accounts.Professor')
-#
-#     def __str__(self):
-#         return '%s by %s' % (self.subject, self.professor)
-
-
 class Attendance(models.Model):
-    # STATUS = (
-    #     ('P', 'Present'),
-    #     ('D', 'Duty'),
-    #     ('A', 'Absent'),
-    # )
     TYPE = (
         ('L', 'Lecture'),
         ('P', 'Practical'),
@@ -58,17 +30,19 @@ class Attendance(models.Model):
     )
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    when = models.DateTimeField(default=datetime.now, unique=True,)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=True)
+    when = models.DateTimeField(default=timezone.now)
     duration = models.DurationField(default=timedelta(hours=1))
     professor = models.ForeignKey('accounts.Professor',
                                   on_delete=models.CASCADE)
     students = models.ManyToManyField('accounts.Student', blank=True)
-    # status = models.CharField(max_length=1, choices=STATUS, default='P')
     type = models.CharField(max_length=1, choices=TYPE, default='L')
+
+    class Meta:
+        unique_together = ('subject', 'when')
 
     def __str__(self):
         return self.subject.subject_name + " - " + self.when.__str__()
 
     def get_absolute_url(self):
-        return reverse('attendance:create')
+        return reverse('attendance:details', kwargs={'pk': self.pk})

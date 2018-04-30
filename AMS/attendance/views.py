@@ -24,27 +24,32 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
             return {'user': self.request.user}
         if step == '1':
             prev_data = self.storage.get_step_data('0')
-            return {'subject': prev_data.get('0-subject')}
+            return {'user': self.request.user, 'course': prev_data.get('0-course')}
+        if step == '2':
+            prev_data = self.storage.get_step_data('1')
+            return {'subject': prev_data.get('1-subject')}
         return {}
 
     def done(self, form_list, form_dict, **kwargs):
         form1data = self.storage.get_step_data('0')
         form2data = self.storage.get_step_data('1')
+        form3data = self.storage.get_step_data('2')
         att = Attendance()
-        att.subject = Subject.objects.get(pk=form1data.get('0-subject'))
+        att.subject = Subject.objects.get(pk=form2data.get('1-subject'))
         att.course = Course.objects.get(pk=form1data.get('0-course'))
         att.professor = Professor.objects.get(pk=self.request.user.pk)
         att.when = form1data.get('0-when')
         d = re.match(
             r'((?P<days>\d+) days, )?(?P<hours>\d+):'
             r'(?P<minutes>\d+):(?P<seconds>\d+)',
-            form1data.get('0-duration')).groupdict(0)
+            form2data.get('1-duration')).groupdict(0)
         att.duration = timedelta(**dict(((key, int(value)) for key, value in d.items())))
         att.save()
-        for s in form2data.getlist('1-students'):
+        for s in form3data.getlist('2-students'):
             att.students.add(s)
         att.type = form2data.get('1-type')
-        return redirect('attendance:attendance-list')
+        att.save()
+        return redirect('attendance:details', pk=att.pk)
 
 
 class AttendanceList(LoginRequiredMixin, ListView):
@@ -66,4 +71,3 @@ class AttendanceDetails(DetailView):
         context['student_list'] = subject.students_enrolled.all().order_by('username')
         context['present_list'] = context['attendance'].students.all()
         return context
-
