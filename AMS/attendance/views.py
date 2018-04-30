@@ -1,7 +1,7 @@
 import re
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from formtools.wizard.views import SessionWizardView
 
@@ -14,6 +14,8 @@ class CourseList(ListView):
 
 class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
                        SessionWizardView):
+    template_name = 'attendance/attendance_form.html'
+
     def test_func(self):
         return self.request.user.is_professor
 
@@ -42,7 +44,7 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
         for s in form2data.getlist('1-students'):
             att.students.add(s)
         att.type = form2data.get('1-type')
-        return render(self.request, 'attendance/attendance_list.html')
+        return redirect('attendance:create')
 
 
 class AttendanceList(LoginRequiredMixin, ListView):

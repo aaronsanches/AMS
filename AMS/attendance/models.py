@@ -59,11 +59,11 @@ class Attendance(models.Model):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    when = models.DateTimeField(default=datetime.now, unique=True)
+    when = models.DateTimeField(default=datetime.now, unique=True,)
     duration = models.DurationField(default=timedelta(hours=1))
     professor = models.ForeignKey('accounts.Professor',
                                   on_delete=models.CASCADE)
-    students = models.ManyToManyField('accounts.Student')
+    students = models.ManyToManyField('accounts.Student', blank=True)
     # status = models.CharField(max_length=1, choices=STATUS, default='P')
     type = models.CharField(max_length=1, choices=TYPE, default='L')
 

@@ -22,9 +22,11 @@ class AttendanceForm2(forms.ModelForm):
         model = Attendance
         exclude = ['professor', 'course', 'subject', 'when', 'duration']
 
+
     def __init__(self, *args, **kwargs):
         self.subject = Subject.objects.get(pk=kwargs.pop('subject', None))
         super(AttendanceForm2, self).__init__(*args, **kwargs)
         # self.students = forms.MultipleChoiceField(label="Students Present",)
         self.fields["students"].widget = forms.widgets.CheckboxSelectMultiple()
+        self.fields["students"].help_text = "Students that are present"
         self.fields["students"].queryset = self.subject.students.all().order_by('username')
