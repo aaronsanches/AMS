@@ -14,4 +14,24 @@
     </div>
 </div>
 {% endif %}
+<table>
+    <thead>
+    <th>Subject</th>
+    <th>Present</th>
+    <th>Absent</th>
+    <th>Total</th>
+    <th>Percent</th>
+    </thead>
+    <tbody>
+    {% for subject, p, a, t, perc in rows %}
+        <tr>
+            <td>{{ subject.subject_name }}</td>
+            <td>{{ p }}</td>
+            <td>{{ a }}</td>
+            <td>{{ t }}</td>
+            <td>{{ perc }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

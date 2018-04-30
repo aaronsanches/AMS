@@ -15,5 +15,5 @@ urlpatterns = [
          {'post_reset_redirect': 'accounts:password_reset_complete', },
          name='password_reset_confirm'),
     path('', include('django.contrib.auth.urls')),
-    path('profile/', profile, name="profile"),
+    path('profile/', Profile.as_view(), name="profile"),
 ]
