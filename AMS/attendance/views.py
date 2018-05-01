@@ -2,7 +2,7 @@ import re
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from formtools.wizard.views import SessionWizardView
 
 from .forms import *
@@ -24,7 +24,8 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
             return {'user': self.request.user}
         if step == '1':
             prev_data = self.storage.get_step_data('0')
-            return {'user': self.request.user, 'course': prev_data.get('0-course')}
+            return {'user': self.request.user,
+                    'course': prev_data.get('0-course')}
         if step == '2':
             prev_data = self.storage.get_step_data('1')
             return {'subject': prev_data.get('1-subject')}
@@ -43,7 +44,8 @@ class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
             r'((?P<days>\d+) days, )?(?P<hours>\d+):'
             r'(?P<minutes>\d+):(?P<seconds>\d+)',
             form2data.get('1-duration')).groupdict(0)
-        att.duration = timedelta(**dict(((key, int(value)) for key, value in d.items())))
+        att.duration = timedelta(
+            **dict(((key, int(value)) for key, value in d.items())))
         att.save()
         for s in form3data.getlist('2-students'):
             att.students.add(s)
@@ -57,8 +59,10 @@ class AttendanceList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_professor:
-            return Attendance.objects.filter(professor__pk=self.request.user)
-        return Attendance.objects.filter(students__pk=self.request.user)
+            return Attendance.objects.filter(
+                professor__pk=self.request.user).order_by('when')
+        return Attendance.objects.filter(
+            students__pk=self.request.user).order_by('when')
 
 
 class AttendanceDetails(DetailView):
@@ -68,6 +72,15 @@ class AttendanceDetails(DetailView):
     def get_context_data(self, **kwargs):
         context = super(AttendanceDetails, self).get_context_data(**kwargs)
         subject = Subject.objects.get(pk=context['attendance'].subject.pk)
-        context['student_list'] = subject.students_enrolled.all().order_by('username')
+        context['student_list'] = subject.students_enrolled.all().order_by(
+            'username')
         context['present_list'] = context['attendance'].students.all()
         return context
+
+
+class AttendanceUpdate(UpdateView):
+    model = Attendance
+    template_name_suffix = '_update_form'
+    fields = ['type', 'when', 'duration', 'students']
+
+

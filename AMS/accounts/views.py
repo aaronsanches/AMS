@@ -46,7 +46,8 @@ class Profile(TemplateView):
             if t is 0:
                 subject_perc.append(0)
             else:
-                subject_perc.append(p / t * 100.0)
+                subject_perc.append(round((p / t * 100.0), 2))
+        context['total_perc'] = round((sum(subject_p)/sum(subject_t)), 2)*100
         context['rows'] = zip(subject_list, subject_p, subject_a, subject_t,
                               subject_perc)
         return context

@@ -5,16 +5,17 @@
 <h2>Hello, {{ user.first_name }} {{ user.last_name }}</h2>
 {% endif %}
 {% if user.is_professor %}
-<div class="row">
-    <div class="col-6-m text-center" >
+<div class="row pad-10">
+    <div class="button col-1-4-m text-center" >
         <a href="{% url 'attendance:create' %}">Add Attendance</a>
     </div>
-    <div class="col-6-m text-center"  >
+    <div class="button col-1-4-m push-1-2-m text-center" >
         <a href="{% url 'attendance:attendance-list' %}">View Attendance</a>
     </div>
 </div>
-{% endif %}
+{% else %}
 <table>
+    <h4>Current Attendance: {{ total_perc }}%</h4>
     <thead>
     <th>Subject</th>
     <th>Present</th>
@@ -34,4 +35,6 @@
     {% endfor %}
     </tbody>
 </table>
+{% endif %}
+
 {% endblock %}

@@ -17,7 +17,7 @@
         <tbody>
         {% for a in object_list %}
         <tr>
-            <td>{{ a.when }}</td>
+            <td><a href="{% url 'attendance:details' pk=a.pk %}">{{ a.when }}</a></td>
             <td>{{ a.subject }}</td>
             <td>{{ a.get_type_display }}</td>
             {% if not user.is_professor %}
@@ -28,4 +28,10 @@
         </tbody>
     </table>
 </div>
+
 {% endblock %}
+<script>
+     $("tr").click(function(){
+   window.location = "#";
+ });
+</script>

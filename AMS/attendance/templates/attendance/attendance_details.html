@@ -2,8 +2,8 @@
 {% block content %}
 <h4>Attendance Detail</h4>
 
-<div style="max-width: 600px; margin: 0 auto; padding: 15px;">
-        {{ attendance.subject }} {{ attendance.get_type_display }} taken on {{ attendance.when.date }} at {{ attendance.when.time }}
+<div class="row pad-10">
+    {{ attendance.subject }} {{ attendance.get_type_display }} taken on {{ attendance.when.date }} at {{ attendance.when.time }}
     <table>
         <thead>
         <tr>
@@ -28,5 +28,15 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="row pad-10">
+        <div class="col-1-4-m push-1-2-m">
+            <a class="button" href="{% url 'attendance:update' pk=attendance.pk %}">Edit attendance</a>
+        </div>
+    </div>
+    <div class="row pad-10">
+        <div class="col-1-4-m push-1-4-m">
+            <a class="button" href="{% url 'attendance:create' %}">Add another</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
