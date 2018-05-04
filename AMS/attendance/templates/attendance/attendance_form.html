@@ -43,3 +43,16 @@
     {% endif %}
 </form>
 {% endblock %}
+{% block pagescript %}
+<script>
+  document.getElementById("id_1-type").addEventListener('change', function (e) {
+    var duration = "01:00:00"
+    var x = e.target.value
+    if (x === "P")
+      duration = "02:00:00"
+    else
+      duration = "01:00:00"
+    document.getElementById("id_1-duration").value = duration
+});
+</script>
+{% endblock pagescript %}

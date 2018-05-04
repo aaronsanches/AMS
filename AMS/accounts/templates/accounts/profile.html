@@ -5,12 +5,12 @@
 <h2>Hello, {{ user.first_name }} {{ user.last_name }}</h2>
 {% endif %}
 {% if user.is_professor %}
-<div class="row pad-10">
+<div class="row pad-40">
     <div class="button col-1-4-m text-center" >
-        <a href="{% url 'attendance:create' %}">Add Attendance</a>
+        <a href="{% url 'attendance:create' %}" style="text-decoration:none">Add Attendance</a>
     </div>
-    <div class="button col-1-4-m push-1-2-m text-center" >
-        <a href="{% url 'attendance:attendance-list' %}">View Attendance</a>
+    <div class="button col-1-4-m push-1-2-m text-center">
+        <a href="{% url 'attendance:attendance-list' %}" style="text-decoration:none">View Attendance</a>
     </div>
 </div>
 {% else %}

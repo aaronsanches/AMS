@@ -28,14 +28,12 @@
         {% endfor %}
         </tbody>
     </table>
-    <div class="row pad-10">
-        <div class="col-1-4-m push-1-2-m">
-            <a class="button" href="{% url 'attendance:update' pk=attendance.pk %}">Edit attendance</a>
+    <div class="row pad-40">
+        <div class="button col-1-4-m text-center">
+            <a href="{% url 'attendance:update' pk=attendance.pk %}" style="text-decoration:none">Edit attendance</a>
         </div>
-    </div>
-    <div class="row pad-10">
-        <div class="col-1-4-m push-1-4-m">
-            <a class="button" href="{% url 'attendance:create' %}">Add another</a>
+        <div class="button col-1-4-m push-1-2-m text-center">
+            <a href="{% url 'attendance:create' %}" style="text-decoration:none">Add another</a>
         </div>
     </div>
 </div>

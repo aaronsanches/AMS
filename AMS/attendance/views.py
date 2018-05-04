@@ -7,14 +7,21 @@ from formtools.wizard.views import SessionWizardView
 
 from .forms import *
 
+FORMS = [("form1", AttendanceForm1), ("form2", AttendanceForm2),
+         ("form3", AttendanceForm3),
+         ]
 
-class CourseList(ListView):
-    model = Course
+TEMPLATES = {"0": "attendance/attendance_form.html",
+             "1": "attendance/attendance_form.html",
+             "2": "attendance/attendance_form.html",
+             }
 
 
 class AttendanceWizard(LoginRequiredMixin, UserPassesTestMixin,
                        SessionWizardView):
-    template_name = 'attendance/attendance_form.html'
+    # template_name = 'attendance/attendance_form.html'
+    def get_template_names(self):
+        return [TEMPLATES[self.steps.current]]
 
     def test_func(self):
         return self.request.user.is_professor
@@ -81,6 +88,5 @@ class AttendanceDetails(DetailView):
 class AttendanceUpdate(UpdateView):
     model = Attendance
     template_name_suffix = '_update_form'
-    fields = ['type', 'when', 'duration', 'students']
-
+    form_class = AttendanceUpdateForm
 
