@@ -24,9 +24,15 @@
 <div class="banner">
     <div class="container">
         <div class="menu header clear pad-top-10 pad-bottom-10">
+            {% if user.is_authenticated %}
             <a class="left strong" href="{% url 'accounts:profile' %}">
                 AMS
             </a>
+            {% else %}
+            <a class="left strong" href="#">
+                AMS
+            </a>
+            {% endif %}
             {% block nav %}
             {% if user.is_authenticated %}
             <a class="right" href="{% url 'accounts:logout' %}">Logout</a>

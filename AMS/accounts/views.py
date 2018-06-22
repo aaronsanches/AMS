@@ -15,7 +15,7 @@ def register(request):
         form = PersonCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('accounts:profile')
+            return redirect('accounts:login')
     else:
         form = PersonCreationForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -47,7 +47,11 @@ class Profile(TemplateView):
                 subject_perc.append(0)
             else:
                 subject_perc.append(round((p / t * 100.0), 2))
-        context['total_perc'] = round((sum(subject_p)/sum(subject_t)), 2)*100
+        try:
+            context['total_perc'] = round((sum(subject_p) / sum(subject_t)),
+                                          2) * 100
+        except :
+            context['total_perc'] = 0
         context['rows'] = zip(subject_list, subject_p, subject_a, subject_t,
                               subject_perc)
         return context
